@@ -1,0 +1,42 @@
+@{
+    ViewData["Title"] = "Home";
+}
+
+<div class="text-center">
+    <h1 class="display-4">Welcome to Supremo Scheduling System</h1>
+    
+    @if (!User.Identity.IsAuthenticated)
+    {
+        <p>Please <a asp-controller="Account" asp-action="Login">login</a> to access the system.</p>
+    }
+    else
+    {
+        <div class="mt-4">
+            @if (User.IsInRole("Admin"))
+            {
+                <div class="alert alert-info">
+                    <h4>Admin Dashboard</h4>
+                    <p>Manage users and system settings</p>
+                    <a asp-controller="Admin" asp-action="Index" class="btn btn-primary">Go to Dashboard</a>
+                </div>
+            }
+            else if (User.IsInRole("Client"))
+            {
+                <div class="alert alert-info">
+                    <h4>Client Portal</h4>
+                    <p>Manage your appointments and addresses</p>
+                    <a asp-controller="Client" asp-action="Appointments" class="btn btn-primary">View Appointments</a>
+                    <a asp-controller="Client" asp-action="Addresses" class="btn btn-secondary">Manage Addresses</a>
+                </div>
+            }
+            else if (User.IsInRole("Employee"))
+            {
+                <div class="alert alert-info">
+                    <h4>Employee Portal</h4>
+                    <p>View and manage your schedule</p>
+                    <a asp-controller="Employee" asp-action="Schedule" class="btn btn-primary">View Schedule</a>
+                </div>
+            }
+        </div>
+    }
+</div>
